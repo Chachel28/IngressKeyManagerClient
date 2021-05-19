@@ -1,4 +1,4 @@
-import 'package:ingress_key_manager/model/operation_entity.dart';
+import 'package:ingress_key_manager/models/operation_entity.dart';
 
 operationEntityFromJson(OperationEntity data, Map<String, dynamic> json) {
 	if (json['data'] != null) {
