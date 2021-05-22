@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ingress_key_manager/pages/register.page.dart';
-import '../widgets/loginButton.dart';
-import '../widgets/first.dart';
-import '../widgets/inputEmail.dart';
-import '../widgets/password.dart';
-import '../widgets/textLogin.dart';
-import '../widgets/verticalText.dart';
 
 class LoginPage extends StatefulWidget {
   @override

@@ -1,12 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:ingress_key_manager/generated/json/user_entity_helper.dart';
 import 'package:ingress_key_manager/pages/login.page.dart';
-import '../widgets/buttonNewUser.dart';
-import '../widgets/newEmail.dart';
-import '../widgets/newName.dart';
-import '../widgets/password.dart';
-import '../widgets/singup.dart';
-import '../widgets/textNew.dart';
-import '../widgets/userOld.dart';
+import 'package:http/http.dart' as http;
+import 'package:ingress_key_manager/constants.dart' as Constants;
+import 'package:ingress_key_manager/models/user_entity.dart';
 
 class NewUser extends StatefulWidget {
   @override
@@ -160,14 +159,15 @@ class _NewUserState extends State<NewUser> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30)),
                     child: FlatButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+                      onPressed: () async{
+                        UserEntity user = await createUser(nameController.text, emailController.text, passController.text);
+                        print(user.username);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            'OK',
+                            'Registrar',
                             style: TextStyle(
                               color: Colors.lightBlueAccent,
                               fontSize: 14,
@@ -227,5 +227,28 @@ class _NewUserState extends State<NewUser> {
         ),
       ),
     );
+  }
+}
+
+Future<UserEntity> createUser(
+    String username, String email, String password) async {
+  final response = await http.post(
+    Uri.http(Constants.baseUrl, Constants.endpointUsers),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'username': username,
+      'email': email,
+      'password': password
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    var user = UserEntity();
+    userEntityFromJson(user, jsonDecode(response.body));
+    return user;
+  } else {
+    throw Exception('Failed to create album.');
   }
 }
