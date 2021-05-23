@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ingress_key_manager/pages/login.page.dart';
+import 'package:ingress_key_manager/util/UserUtils.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primaryColor: Colors.amber,
       ),
-      home: LoginPage(),
+      home: LoginPage(UserUtils()),
     );
   }
 }

@@ -1,15 +1,30 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:ingress_key_manager/pages/register.page.dart';
+import 'package:ingress_key_manager/util/UserUtils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ingress_key_manager/util/constants.dart' as Constants;
 
 class LoginPage extends StatefulWidget {
+  UserUtils userUtils;
+  LoginPage(UserUtils userUtils){
+    this.userUtils = userUtils;
+  }
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState(userUtils);
 }
 
 class _LoginPageState extends State<LoginPage> {
   String inputText = 'cosas';
   final nameController = TextEditingController();
   final passController = TextEditingController();
+  UserUtils userUtils;
+
+  _LoginPageState(UserUtils userUtils){
+    this.userUtils = userUtils;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,14 +146,18 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: FlatButton(
-                      onPressed: () {
-                        setState(() {});
+                      onPressed: () async{
+                        String token = await userUtils.loginUser(nameController.text, passController.text);
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setString(Constants.apiToken, token);
+
+                        //TODO: Hacer la pantalla principal y redirigir a ella
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            '$inputText',
+                            'Login',
                             style: TextStyle(
                               color: Colors.lightBlueAccent,
                               fontSize: 14,
@@ -175,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NewUser(),
+                                builder: (context) => NewUser(userUtils),
                               ),
                             );
                           },

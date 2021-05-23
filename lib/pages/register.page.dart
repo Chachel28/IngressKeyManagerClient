@@ -1,21 +1,29 @@
-import 'dart:convert';
+
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:ingress_key_manager/generated/json/user_entity_helper.dart';
-import 'package:ingress_key_manager/pages/login.page.dart';
-import 'package:http/http.dart' as http;
-import 'package:ingress_key_manager/constants.dart' as Constants;
 import 'package:ingress_key_manager/models/user_entity.dart';
+import 'package:ingress_key_manager/util/UserUtils.dart';
 
 class NewUser extends StatefulWidget {
+  UserUtils userUtils;
+  NewUser(UserUtils userUtils){
+    this.userUtils = userUtils;
+  }
+
   @override
-  _NewUserState createState() => _NewUserState();
+  _NewUserState createState() => _NewUserState(userUtils);
 }
 
 class _NewUserState extends State<NewUser> {
+  UserUtils userUtils;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
+
+  _NewUserState(UserUtils userUtils){
+    this.userUtils = userUtils;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,8 +168,11 @@ class _NewUserState extends State<NewUser> {
                         borderRadius: BorderRadius.circular(30)),
                     child: FlatButton(
                       onPressed: () async{
-                        UserEntity user = await createUser(nameController.text, emailController.text, passController.text);
-                        print(user.username);
+                        UserEntity user = UserEntity();
+                        user = await userUtils.createUser(nameController.text, emailController.text, passController.text);
+                        if(user.username != null){
+                          Navigator.pop(context);
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -201,12 +212,7 @@ class _NewUserState extends State<NewUser> {
                         FlatButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ),
-                            );
+                            Navigator.pop(context);
                           },
                           child: Text(
                             'Sing in',
@@ -227,28 +233,5 @@ class _NewUserState extends State<NewUser> {
         ),
       ),
     );
-  }
-}
-
-Future<UserEntity> createUser(
-    String username, String email, String password) async {
-  final response = await http.post(
-    Uri.http(Constants.baseUrl, Constants.endpointUsers),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'username': username,
-      'email': email,
-      'password': password
-    }),
-  );
-
-  if (response.statusCode == 200) {
-    var user = UserEntity();
-    userEntityFromJson(user, jsonDecode(response.body));
-    return user;
-  } else {
-    throw Exception('Failed to create album.');
   }
 }
