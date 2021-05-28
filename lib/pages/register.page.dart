@@ -1,28 +1,25 @@
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:ingress_key_manager/models/user_entity.dart';
-import 'package:ingress_key_manager/util/UserUtils.dart';
+import 'package:ingress_key_manager/util/utils.dart';
 
 class NewUser extends StatefulWidget {
-  UserUtils userUtils;
-  NewUser(UserUtils userUtils){
-    this.userUtils = userUtils;
+  Utils utils;
+  NewUser(Utils utils){
+    this.utils = utils;
   }
 
   @override
-  _NewUserState createState() => _NewUserState(userUtils);
+  _NewUserState createState() => _NewUserState(utils);
 }
 
 class _NewUserState extends State<NewUser> {
-  UserUtils userUtils;
+  Utils utils;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
 
-  _NewUserState(UserUtils userUtils){
-    this.userUtils = userUtils;
+  _NewUserState(Utils utils){
+    this.utils = utils;
   }
 
   @override
@@ -169,7 +166,7 @@ class _NewUserState extends State<NewUser> {
                     child: FlatButton(
                       onPressed: () async{
                         UserEntity user = UserEntity();
-                        user = await userUtils.createUser(nameController.text, emailController.text, passController.text);
+                        user = await utils.createUser(nameController.text, emailController.text, passController.text);
                         if(user.username != null){
                           Navigator.pop(context);
                         }

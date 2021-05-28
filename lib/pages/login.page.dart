@@ -1,29 +1,28 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:ingress_key_manager/pages/home.page.dart';
 import 'package:ingress_key_manager/pages/register.page.dart';
-import 'package:ingress_key_manager/util/UserUtils.dart';
+import 'package:ingress_key_manager/util/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ingress_key_manager/util/constants.dart' as Constants;
 
 class LoginPage extends StatefulWidget {
-  UserUtils userUtils;
-  LoginPage(UserUtils userUtils){
-    this.userUtils = userUtils;
+  Utils utils;
+  LoginPage(Utils utils){
+    this.utils = utils;
   }
 
   @override
-  _LoginPageState createState() => _LoginPageState(userUtils);
+  _LoginPageState createState() => _LoginPageState(utils);
 }
 
 class _LoginPageState extends State<LoginPage> {
   String inputText = 'cosas';
   final nameController = TextEditingController();
   final passController = TextEditingController();
-  UserUtils userUtils;
+  Utils utils;
 
-  _LoginPageState(UserUtils userUtils){
-    this.userUtils = userUtils;
+  _LoginPageState(Utils utils){
+    this.utils = utils;
   }
 
   @override
@@ -147,11 +146,14 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: FlatButton(
                       onPressed: () async{
-                        String token = await userUtils.loginUser(nameController.text, passController.text);
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.setString(Constants.apiToken, token);
+                        String token = await utils.loginUser(nameController.text, passController.text);
+                        utils.setStringSharedPref(Constants.apiToken, token);
 
-                        //TODO: Hacer la pantalla principal y redirigir a ella
+                        if(token.isNotEmpty){
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => HomePage(utils),
+                          ));
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -194,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NewUser(userUtils),
+                                builder: (context) => NewUser(utils),
                               ),
                             );
                           },
