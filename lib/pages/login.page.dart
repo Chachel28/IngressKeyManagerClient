@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ingress_key_manager/pages/home.page.dart';
 import 'package:ingress_key_manager/pages/register.page.dart';
 import 'package:ingress_key_manager/util/utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ingress_key_manager/util/constants.dart' as Constants;
 
 class LoginPage extends StatefulWidget {
@@ -147,8 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: FlatButton(
                       onPressed: () async{
                         String token = await utils.loginUser(nameController.text, passController.text);
-                        utils.setStringSharedPref(Constants.apiToken, token);
-
+                        utils.setStringSharedPref(Constants.apiTokenKey, token);
                         if(token.isNotEmpty){
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) => HomePage(utils),

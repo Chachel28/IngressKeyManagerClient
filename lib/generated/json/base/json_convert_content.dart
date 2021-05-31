@@ -7,6 +7,8 @@ import 'package:ingress_key_manager/models/operation_entity.dart';
 import 'package:ingress_key_manager/generated/json/operation_entity_helper.dart';
 import 'package:ingress_key_manager/models/user_entity.dart';
 import 'package:ingress_key_manager/generated/json/user_entity_helper.dart';
+import 'package:ingress_key_manager/models/user_d_t_o_entity.dart';
+import 'package:ingress_key_manager/generated/json/user_d_t_o_entity_helper.dart';
 
 class JsonConvert<T> {
 	T fromJson(Map<String, dynamic> json) {
@@ -30,7 +32,9 @@ class JsonConvert<T> {
 			case OperationMeta:
 				return operationMetaFromJson(data as OperationMeta, json) as T;
 			case UserEntity:
-				return userEntityFromJson(data as UserEntity, json) as T;    }
+				return userEntityFromJson(data as UserEntity, json) as T;
+			case UserDTOEntity:
+				return userDTOEntityFromJson(data as UserDTOEntity, json) as T;    }
     return data as T;
   }
 
@@ -48,6 +52,8 @@ class JsonConvert<T> {
 				return operationMetaToJson(data as OperationMeta);
 			case UserEntity:
 				return userEntityToJson(data as UserEntity);
+			case UserDTOEntity:
+				return userDTOEntityToJson(data as UserDTOEntity);
 			}
 			return data as T;
 		}
@@ -66,6 +72,8 @@ class JsonConvert<T> {
 			return OperationMeta().fromJson(json);
 		}	else if(type == (UserEntity).toString()){
 			return UserEntity().fromJson(json);
+		}	else if(type == (UserDTOEntity).toString()){
+			return UserDTOEntity().fromJson(json);
 		}	
 		return null;
 	}
@@ -84,6 +92,8 @@ class JsonConvert<T> {
 			return data.map<OperationMeta>((e) => OperationMeta().fromJson(e)).toList() as M;
 		}	else if(<UserEntity>[] is M){
 			return data.map<UserEntity>((e) => UserEntity().fromJson(e)).toList() as M;
+		}	else if(<UserDTOEntity>[] is M){
+			return data.map<UserDTOEntity>((e) => UserDTOEntity().fromJson(e)).toList() as M;
 		}
 		throw Exception("not fond");
 	}

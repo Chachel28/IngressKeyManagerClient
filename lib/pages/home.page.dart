@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ingress_key_manager/pages/profile.page.dart';
 import 'package:ingress_key_manager/util/utils.dart';
 
 class HomePage extends StatefulWidget {
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
             //routes
           ),
           Container(
+            child: ProfilePage(utils),
             color: Colors.white,
             //profile
           ),
@@ -102,6 +104,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     pageController = PageController();
+    utils.initiateUser();
   }
 
   @override
