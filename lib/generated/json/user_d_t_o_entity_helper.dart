@@ -15,6 +15,9 @@ userDTOEntityFromJson(UserDTOEntity data, Map<String, dynamic> json) {
 	if (json['validated'] != null) {
 		data.validated = json['validated'];
 	}
+	if (json['avatar'] != null) {
+		data.avatar = json['avatar'].toString();
+	}
 	return data;
 }
 
@@ -24,5 +27,6 @@ Map<String, dynamic> userDTOEntityToJson(UserDTOEntity entity) {
 	data['username'] = entity.username;
 	data['email'] = entity.email;
 	data['validated'] = entity.validated;
+	data['avatar'] = entity.avatar;
 	return data;
 }

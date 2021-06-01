@@ -7,4 +7,5 @@ class UserDTOEntity with JsonConvert<UserDTOEntity> {
 	String username;
 	String email;
 	bool validated;
+	String avatar;
 }

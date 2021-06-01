@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:ingress_key_manager/generated/json/user_d_t_o_entity_helper.dart';
 import 'package:ingress_key_manager/generated/json/user_entity_helper.dart';
 import 'package:ingress_key_manager/models/user_entity.dart';
@@ -63,7 +62,8 @@ class Utils {
       log("reswue has token");
       bool outdated = isResTokenOutdated();
       if (!outdated) {
-        log("reswue key --------->" + prefs.getString(Constants.reswueTokenKey));
+        log("reswue key --------->" +
+            prefs.getString(Constants.reswueTokenKey));
         return true;
       }
     }
@@ -92,11 +92,12 @@ class Utils {
   }
 
   initiateUser() async {
-    final response = await http.get(Uri.http(
-        Constants.baseUrl,
-        Constants.endpointUsers +
-            "/" +
-            prefs.getString(Constants.usernameKey)),
+    final response = await http.get(
+        Uri.http(
+            Constants.baseUrl,
+            Constants.endpointUsers +
+                "/" +
+                prefs.getString(Constants.usernameKey)),
         headers: <String, String>{
           'Authorization': prefs.getString(Constants.apiTokenKey),
         });
@@ -105,7 +106,38 @@ class Utils {
       userDTOEntityFromJson(user, jsonDecode(response.body));
       log("email ------------> " + user.email);
       prefs.setString(Constants.emailKey, user.email);
+      prefs.setString(Constants.userImageKey, user.avatar);
       return response.headers["authorization"];
+    } else {
+      throw Exception('Failed to initiate.');
+    }
+  }
+
+  Future<String> getReswueURL() async {
+    final response = await http.get(
+        Uri.http(Constants.baseUrl, Constants.endpointReswueURL),
+        headers: <String, String>{
+          'Authorization': prefs.getString(Constants.apiTokenKey),
+        });
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to initiate.');
+    }
+  }
+
+  createReswueToken(String code) async {
+    final response = await http.post(
+      Uri.http(Constants.baseUrl, Constants.endpointReswueToken),
+      headers: <String, String>{
+        'Authorization': prefs.getString(Constants.apiTokenKey),
+      },
+      body: jsonEncode(
+        <String, String>{'code': code, 'user_name': prefs.getString(Constants.usernameKey)},
+      ),
+    );
+    if (response.statusCode == 200) {
+      log(response.body);
     } else {
       throw Exception('Failed to initiate.');
     }

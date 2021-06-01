@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:ingress_key_manager/util/utils.dart';
 import 'package:ingress_key_manager/util/constants.dart' as Constants;
 
@@ -16,6 +19,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Utils utils;
+  String url = "";
+  ChromeSafariBrowser chromeSafariBrowser = ChromeSafariBrowser();
 
   _ProfilePageState(Utils utils) {
     this.utils = utils;
@@ -119,7 +124,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return (utils.isResWueLogged())
         ? Text("Reswue logeado")
         : ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              chromeSafariBrowser.open(url: Uri.parse(url));
+            },
             child: Text(
               "Entrar en Reswue",
             ),
@@ -131,9 +138,16 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   buildProfileImage() {
-    if (utils.getStringSharedPref(Constants.userImageKey) != null) {
+    if (utils.getStringSharedPref(Constants.userImageKey) != null &&
+        utils.getStringSharedPref(Constants.userImageKey).isNotEmpty) {
       return NetworkImage(utils.getStringSharedPref(Constants.userImageKey));
     }
     return AssetImage("images/key.jpg");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    utils.getReswueURL().then((value) => url = value);
   }
 }
