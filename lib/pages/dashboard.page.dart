@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:ingress_key_manager/util/utils.dart';
 import 'package:ingress_key_manager/util/constants.dart' as Constants;
 
-class HomePage extends StatefulWidget {
+class DashboardPage extends StatefulWidget {
   Utils utils;
 
-  HomePage(Utils utils) {
+  DashboardPage(Utils utils) {
     this.utils = utils;
   }
 
   @override
-  _HomePageState createState() => _HomePageState(utils);
+  _DashboardPageState createState() => _DashboardPageState(utils);
 }
 
-class _HomePageState extends State<HomePage> {
+class _DashboardPageState extends State<DashboardPage> {
   Utils utils;
   bool logged = false;
   String reswueText = "";
 
-  _HomePageState(Utils utils) {
+  _DashboardPageState(Utils utils) {
     this.utils = utils;
   }
 
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text("Inicio"),
+        title: Text("Panel de control"),
         centerTitle: true,
       ),
       body: SafeArea(

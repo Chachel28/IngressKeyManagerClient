@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:ingress_key_manager/util/utils.dart';
 import 'package:ingress_key_manager/util/constants.dart' as Constants;
 
-class HomePage extends StatefulWidget {
+class KeysPage extends StatefulWidget {
   Utils utils;
 
-  HomePage(Utils utils) {
+  KeysPage(Utils utils) {
     this.utils = utils;
   }
 
   @override
-  _HomePageState createState() => _HomePageState(utils);
+  _KeysPageState createState() => _KeysPageState(utils);
 }
 
-class _HomePageState extends State<HomePage> {
+class _KeysPageState extends State<KeysPage> {
   Utils utils;
   bool logged = false;
   String reswueText = "";
 
-  _HomePageState(Utils utils) {
+  _KeysPageState(Utils utils) {
     this.utils = utils;
   }
 
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text("Inicio"),
+        title: Text("Llaves"),
         centerTitle: true,
       ),
       body: SafeArea(

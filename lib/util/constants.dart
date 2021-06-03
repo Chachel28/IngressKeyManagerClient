@@ -15,3 +15,4 @@ String emailKey = "EMAIL_TOKEN";
 String apiTokenKey = "API_TOKEN";
 String reswueTokenKey = "RESWUE_TOKEN";
 String reswueRefreshTokenKey = "RESWUE_REFRESH_TOKEN";
+String codeKey = "CODE_KEY";

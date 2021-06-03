@@ -56,14 +56,12 @@ class Utils {
     }
   }
 
-  bool isResWueLogged() {
+  Future<bool> isResWueLogged() async {
     log("checking reswue");
-    if (prefs.getKeys().contains(Constants.reswueTokenKey)) {
-      log("reswue has token");
-      bool outdated = isResTokenOutdated();
+    bool outdated = await isResTokenOutdated();
+    if (prefs.getString(Constants.reswueTokenKey).isNotEmpty &&
+        prefs.getString(Constants.reswueTokenKey) != null) {
       if (!outdated) {
-        log("reswue key --------->" +
-            prefs.getString(Constants.reswueTokenKey));
         return true;
       }
     }
@@ -78,8 +76,7 @@ class Utils {
     prefs.setString(key, value);
   }
 
-  isResTokenOutdated() async {
-    log("checking if is outdated");
+  Future<bool> isResTokenOutdated() async {
     final response = await http.get(Uri.http(
         Constants.baseUrl,
         Constants.endpointOutdated +
@@ -104,7 +101,6 @@ class Utils {
     if (response.statusCode == 200) {
       var user = UserDTOEntity();
       userDTOEntityFromJson(user, jsonDecode(response.body));
-      log("email ------------> " + user.email);
       prefs.setString(Constants.emailKey, user.email);
       prefs.setString(Constants.userImageKey, user.avatar);
       return response.headers["authorization"];
@@ -131,13 +127,18 @@ class Utils {
       Uri.http(Constants.baseUrl, Constants.endpointReswueToken),
       headers: <String, String>{
         'Authorization': prefs.getString(Constants.apiTokenKey),
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(
-        <String, String>{'code': code, 'user_name': prefs.getString(Constants.usernameKey)},
+        <String, String>{
+          'code': code,
+          'user_name': prefs.getString(Constants.usernameKey)
+        },
       ),
     );
     if (response.statusCode == 200) {
       log(response.body);
+      setStringSharedPref(Constants.reswueTokenKey, response.body);
     } else {
       throw Exception('Failed to initiate.');
     }

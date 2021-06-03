@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:ingress_key_manager/pages/reswue.register.page.dart';
 import 'package:ingress_key_manager/util/utils.dart';
 import 'package:ingress_key_manager/util/constants.dart' as Constants;
 
@@ -19,8 +19,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Utils utils;
-  String url = "";
-  ChromeSafariBrowser chromeSafariBrowser = ChromeSafariBrowser();
+  bool logged = false;
+  String reswueText = "";
 
   _ProfilePageState(Utils utils) {
     this.utils = utils;
@@ -88,7 +88,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                         title: Text("Reswue"),
                                       ),
                                     ),
-                                    buildReswueButton(),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: logged
+                                              ? Colors.red
+                                              : Colors.blue),
+                                      onPressed: () => {
+                                        logged ? logOutReswue() : logInReswue()
+                                      },
+                                      child: Text(
+                                        '$reswueText',
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -120,17 +131,17 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  buildReswueButton() {
-    return (utils.isResWueLogged())
-        ? Text("Reswue logeado")
-        : ElevatedButton(
-            onPressed: () {
-              chromeSafariBrowser.open(url: Uri.parse(url));
-            },
-            child: Text(
-              "Entrar en Reswue",
-            ),
-          );
+  buildReswueButton() async {
+    logged = await utils.isResWueLogged();
+    if (logged) {
+      setState(() {
+        reswueText = "Salir de Reswue";
+      });
+    } else {
+      setState(() {
+        reswueText = "Entrar en Reswue";
+      });
+    }
   }
 
   buildTelegramButton() {
@@ -148,6 +159,39 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    utils.getReswueURL().then((value) => url = value);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      buildReswueButton();
+    });
+  }
+
+  logOutReswue() {
+    utils.setStringSharedPref(Constants.reswueTokenKey, "");
+    log(utils.getStringSharedPref(Constants.reswueTokenKey));
+    logged = false;
+    setState(() {
+      reswueText = "Entrar en Reswue";
+    });
+  }
+
+  logInReswue() {
+    if (utils.getStringSharedPref(Constants.codeKey).isEmpty ||
+        utils.getStringSharedPref(Constants.codeKey) == null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ReswueRegisterPage(utils),
+        ),
+      );
+      setState(() {
+        reswueText = "Vuelve a pulsar para logearte";
+      });
+    } else {
+      utils.createReswueToken(utils.getStringSharedPref(Constants.codeKey));
+      utils.setStringSharedPref(Constants.codeKey, "");
+      logged = true;
+      setState(() {
+        reswueText = "Salir de Reswue";
+      });
+    }
   }
 }

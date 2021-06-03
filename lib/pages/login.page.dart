@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ingress_key_manager/pages/home.page.dart';
+import 'package:ingress_key_manager/pages/scaffold.page.dart';
 import 'package:ingress_key_manager/pages/register.page.dart';
 import 'package:ingress_key_manager/util/utils.dart';
 import 'package:ingress_key_manager/util/constants.dart' as Constants;
@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                         utils.setStringSharedPref(Constants.apiTokenKey, token);
                         if(token.isNotEmpty){
                           Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => HomePage(utils),
+                            builder: (context) => ScaffoldPage(utils),
                           ));
                         }
                       },
