@@ -182,12 +182,6 @@ class _ProfilePageState extends State<ProfilePage> {
           builder: (context) => ReswueRegisterPage(utils),
         ),
       );
-      setState(() {
-        reswueText = "Vuelve a pulsar para logearte";
-      });
-    } else {
-      utils.createReswueToken(utils.getStringSharedPref(Constants.codeKey));
-      utils.setStringSharedPref(Constants.codeKey, "");
       logged = true;
       setState(() {
         reswueText = "Salir de Reswue";

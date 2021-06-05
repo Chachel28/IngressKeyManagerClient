@@ -9,6 +9,8 @@ import 'package:ingress_key_manager/models/user_entity.dart';
 import 'package:ingress_key_manager/generated/json/user_entity_helper.dart';
 import 'package:ingress_key_manager/models/user_d_t_o_entity.dart';
 import 'package:ingress_key_manager/generated/json/user_d_t_o_entity_helper.dart';
+import 'package:ingress_key_manager/models/key_entity.dart';
+import 'package:ingress_key_manager/generated/json/key_entity_helper.dart';
 
 class JsonConvert<T> {
 	T fromJson(Map<String, dynamic> json) {
@@ -34,7 +36,15 @@ class JsonConvert<T> {
 			case UserEntity:
 				return userEntityFromJson(data as UserEntity, json) as T;
 			case UserDTOEntity:
-				return userDTOEntityFromJson(data as UserDTOEntity, json) as T;    }
+				return userDTOEntityFromJson(data as UserDTOEntity, json) as T;
+			case KeyEntity:
+				return keyEntityFromJson(data as KeyEntity, json) as T;
+			case KeyData:
+				return keyDataFromJson(data as KeyData, json) as T;
+			case KeyLinks:
+				return keyLinksFromJson(data as KeyLinks, json) as T;
+			case KeyMeta:
+				return keyMetaFromJson(data as KeyMeta, json) as T;    }
     return data as T;
   }
 
@@ -54,6 +64,14 @@ class JsonConvert<T> {
 				return userEntityToJson(data as UserEntity);
 			case UserDTOEntity:
 				return userDTOEntityToJson(data as UserDTOEntity);
+			case KeyEntity:
+				return keyEntityToJson(data as KeyEntity);
+			case KeyData:
+				return keyDataToJson(data as KeyData);
+			case KeyLinks:
+				return keyLinksToJson(data as KeyLinks);
+			case KeyMeta:
+				return keyMetaToJson(data as KeyMeta);
 			}
 			return data as T;
 		}
@@ -74,6 +92,14 @@ class JsonConvert<T> {
 			return UserEntity().fromJson(json);
 		}	else if(type == (UserDTOEntity).toString()){
 			return UserDTOEntity().fromJson(json);
+		}	else if(type == (KeyEntity).toString()){
+			return KeyEntity().fromJson(json);
+		}	else if(type == (KeyData).toString()){
+			return KeyData().fromJson(json);
+		}	else if(type == (KeyLinks).toString()){
+			return KeyLinks().fromJson(json);
+		}	else if(type == (KeyMeta).toString()){
+			return KeyMeta().fromJson(json);
 		}	
 		return null;
 	}
@@ -94,6 +120,14 @@ class JsonConvert<T> {
 			return data.map<UserEntity>((e) => UserEntity().fromJson(e)).toList() as M;
 		}	else if(<UserDTOEntity>[] is M){
 			return data.map<UserDTOEntity>((e) => UserDTOEntity().fromJson(e)).toList() as M;
+		}	else if(<KeyEntity>[] is M){
+			return data.map<KeyEntity>((e) => KeyEntity().fromJson(e)).toList() as M;
+		}	else if(<KeyData>[] is M){
+			return data.map<KeyData>((e) => KeyData().fromJson(e)).toList() as M;
+		}	else if(<KeyLinks>[] is M){
+			return data.map<KeyLinks>((e) => KeyLinks().fromJson(e)).toList() as M;
+		}	else if(<KeyMeta>[] is M){
+			return data.map<KeyMeta>((e) => KeyMeta().fromJson(e)).toList() as M;
 		}
 		throw Exception("not fond");
 	}

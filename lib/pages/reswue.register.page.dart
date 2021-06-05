@@ -57,6 +57,10 @@ class _ReswueRegisterPageState extends State<ReswueRegisterPage> {
                       codeController.text != null) {
                     widget.utils.setStringSharedPref(
                         Constants.codeKey, codeController.text);
+
+                    widget.utils.createReswueToken(
+                        widget.utils.getStringSharedPref(Constants.codeKey));
+                    widget.utils.setStringSharedPref(Constants.codeKey, "");
                     Navigator.pop(context);
                   }
                 },

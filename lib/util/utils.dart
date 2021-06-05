@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:ingress_key_manager/generated/json/key_entity_helper.dart';
+import 'package:ingress_key_manager/generated/json/operation_entity_helper.dart';
 import 'package:ingress_key_manager/generated/json/user_d_t_o_entity_helper.dart';
 import 'package:ingress_key_manager/generated/json/user_entity_helper.dart';
+import 'package:ingress_key_manager/models/key_entity.dart';
+import 'package:ingress_key_manager/models/operation_entity.dart';
 import 'package:ingress_key_manager/models/user_entity.dart';
 import 'package:ingress_key_manager/models/user_d_t_o_entity.dart';
 import 'package:http/http.dart' as http;
@@ -101,6 +105,7 @@ class Utils {
     if (response.statusCode == 200) {
       var user = UserDTOEntity();
       userDTOEntityFromJson(user, jsonDecode(response.body));
+      prefs.setInt(Constants.idKey, user.userId);
       prefs.setString(Constants.emailKey, user.email);
       prefs.setString(Constants.userImageKey, user.avatar);
       return response.headers["authorization"];
@@ -141,6 +146,48 @@ class Utils {
       setStringSharedPref(Constants.reswueTokenKey, response.body);
     } else {
       throw Exception('Failed to initiate.');
+    }
+  }
+
+  Future<OperationEntity> getOperationList() async {
+    final response = await http.get(
+        Uri.http(
+          Constants.baseUrl,
+          Constants.endpointOperations +
+              prefs.getInt(Constants.idKey).toString(),
+        ),
+        headers: <String, String>{
+          'Authorization': prefs.getString(Constants.apiTokenKey),
+        });
+    OperationEntity operationEntity = OperationEntity();
+    if (response.statusCode == 200) {
+      operationEntity =
+          operationEntityFromJson(operationEntity, jsonDecode(Utf8Decoder().convert(response.bodyBytes)));
+      return operationEntity;
+    } else {
+      throw Exception('Failed to load operation list');
+    }
+  }
+
+  Future<KeyEntity> getKeyList(String slug) async {
+    final response = await http.get(
+        Uri.http(
+          Constants.baseUrl,
+          Constants.endpointOperations +
+              prefs.getInt(Constants.idKey).toString() +
+              "/" +
+              slug,
+        ),
+        headers: <String, String>{
+          'Authorization': prefs.getString(Constants.apiTokenKey),
+        });
+    KeyEntity keyEntity = KeyEntity();
+    if (response.statusCode == 200) {
+      keyEntity = keyEntityFromJson(keyEntity, jsonDecode(Utf8Decoder().convert(response.bodyBytes)));
+      log(keyEntity.toString());
+      return keyEntity;
+    } else {
+      throw Exception('Failed to load operation list');
     }
   }
 }

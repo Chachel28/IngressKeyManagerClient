@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ingress_key_manager/pages/dashboard.page.dart';
 import 'package:ingress_key_manager/pages/home.page.dart';
-import 'package:ingress_key_manager/pages/keys.page.dart';
+import 'package:ingress_key_manager/pages/operations.page.dart';
 import 'package:ingress_key_manager/pages/profile.page.dart';
 import 'package:ingress_key_manager/pages/routes.page.dart';
 import 'package:ingress_key_manager/util/utils.dart';
@@ -44,7 +44,7 @@ class _ScaffoldPageState extends State<ScaffoldPage> {
             //routes
           ),
           Container(
-            child: KeysPage(utils),
+            child: OperationPage(utils),
             color: Colors.white,
             //operations
           ),
