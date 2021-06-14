@@ -106,19 +106,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ],
                                 ),
                               ),
-                              // Container(
-                              //   child: Row(
-                              //     children: [
-                              //       Flexible(
-                              //         child: ListTile(
-                              //           leading: Icon(Icons.person),
-                              //           title: Text("Telegram"),
-                              //         ),
-                              //       ),
-                              //       buildTelegramButton(),
-                              //     ],
-                              //   ),
-                              // ),
                             ],
                           ),
                         ],
@@ -145,10 +132,6 @@ class _ProfilePageState extends State<ProfilePage> {
         reswueText = "Entrar en Reswue";
       });
     }
-  }
-
-  buildTelegramButton() {
-    return Text("WIP");
   }
 
   buildProfileImage() {

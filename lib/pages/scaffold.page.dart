@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ingress_key_manager/pages/dashboard.page.dart';
 import 'package:ingress_key_manager/pages/home.page.dart';
 import 'package:ingress_key_manager/pages/operations.page.dart';
 import 'package:ingress_key_manager/pages/profile.page.dart';
-import 'package:ingress_key_manager/pages/routes.page.dart';
 import 'package:ingress_key_manager/util/utils.dart';
 
 class ScaffoldPage extends StatefulWidget {
@@ -40,21 +38,11 @@ class _ScaffoldPageState extends State<ScaffoldPage> {
               color: Colors.white,
               //homepage
             ),
-            // Container(
-            //   child: RoutesPage(utils),
-            //   color: Colors.white,
-            //   //routes
-            // ),
             Container(
               child: OperationPage(utils),
               color: Colors.white,
               //operations
             ),
-            // Container(
-            //   child: DashboardPage(utils),
-            //   color: Colors.white,
-            //   //dashboard
-            // ),
             Container(
               child: ProfilePage(utils),
               color: Colors.white,
@@ -69,19 +57,9 @@ class _ScaffoldPageState extends State<ScaffoldPage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home, color: (_page == 0) ? Colors.white : Colors.grey),
             ),
-            // BottomNavigationBarItem(
-            //     icon: Icon(Icons.alt_route,
-            //         color: (_page == 1) ? Colors.black : Colors.grey),
-            //     title: Container(height: 0.0),
-            //     backgroundColor: Colors.white),
             BottomNavigationBarItem(
               icon: Icon(Icons.vpn_key_sharp, color: (_page == 1) ? Colors.white : Colors.grey),
             ),
-            // BottomNavigationBarItem(
-            //     icon: Icon(Icons.dashboard,
-            //         color: (_page == 3) ? Colors.black : Colors.grey),
-            //     title: Container(height: 0.0),
-            //     backgroundColor: Colors.white),
             BottomNavigationBarItem(
               icon: Icon(Icons.person, color: (_page == 2) ? Colors.white : Colors.grey),
             ),
