@@ -7,6 +7,10 @@ import 'package:ingress_key_manager/models/operation_entity.dart';
 import 'package:ingress_key_manager/generated/json/operation_entity_helper.dart';
 import 'package:ingress_key_manager/models/user_entity.dart';
 import 'package:ingress_key_manager/generated/json/user_entity_helper.dart';
+import 'package:ingress_key_manager/models/key_per_user_entity.dart';
+import 'package:ingress_key_manager/generated/json/key_per_user_entity_helper.dart';
+import 'package:ingress_key_manager/models/route_entity.dart';
+import 'package:ingress_key_manager/generated/json/route_entity_helper.dart';
 import 'package:ingress_key_manager/models/user_d_t_o_entity.dart';
 import 'package:ingress_key_manager/generated/json/user_d_t_o_entity_helper.dart';
 import 'package:ingress_key_manager/models/key_entity.dart';
@@ -35,6 +39,38 @@ class JsonConvert<T> {
 				return operationMetaFromJson(data as OperationMeta, json) as T;
 			case UserEntity:
 				return userEntityFromJson(data as UserEntity, json) as T;
+			case KeyPerUserEntity:
+				return keyPerUserEntityFromJson(data as KeyPerUserEntity, json) as T;
+			case KeyPerUserData:
+				return keyPerUserDataFromJson(data as KeyPerUserData, json) as T;
+			case KeyPerUserDataUser:
+				return keyPerUserDataUserFromJson(data as KeyPerUserDataUser, json) as T;
+			case KeyPerUserDataPortal:
+				return keyPerUserDataPortalFromJson(data as KeyPerUserDataPortal, json) as T;
+			case RouteEntity:
+				return routeEntityFromJson(data as RouteEntity, json) as T;
+			case RouteRoutes:
+				return routeRoutesFromJson(data as RouteRoutes, json) as T;
+			case RouteRoutesRoute:
+				return routeRoutesRouteFromJson(data as RouteRoutesRoute, json) as T;
+			case RouteRoutesRouteUser:
+				return routeRoutesRouteUserFromJson(data as RouteRoutesRouteUser, json) as T;
+			case RouteRoutesRouteStops:
+				return routeRoutesRouteStopsFromJson(data as RouteRoutesRouteStops, json) as T;
+			case RouteRoutesRouteStopsRoute:
+				return routeRoutesRouteStopsRouteFromJson(data as RouteRoutesRouteStopsRoute, json) as T;
+			case RouteRoutesRouteStopsRouteUser:
+				return routeRoutesRouteStopsRouteUserFromJson(data as RouteRoutesRouteStopsRouteUser, json) as T;
+			case RouteRoutesRouteStopsUser:
+				return routeRoutesRouteStopsUserFromJson(data as RouteRoutesRouteStopsUser, json) as T;
+			case RouteRoutesRouteKeys:
+				return routeRoutesRouteKeysFromJson(data as RouteRoutesRouteKeys, json) as T;
+			case RouteRoutesRouteKeysRoute:
+				return routeRoutesRouteKeysRouteFromJson(data as RouteRoutesRouteKeysRoute, json) as T;
+			case RouteRoutesRouteKeysRouteUser:
+				return routeRoutesRouteKeysRouteUserFromJson(data as RouteRoutesRouteKeysRouteUser, json) as T;
+			case RouteRoutesRouteKeysPortal:
+				return routeRoutesRouteKeysPortalFromJson(data as RouteRoutesRouteKeysPortal, json) as T;
 			case UserDTOEntity:
 				return userDTOEntityFromJson(data as UserDTOEntity, json) as T;
 			case KeyEntity:
@@ -62,6 +98,38 @@ class JsonConvert<T> {
 				return operationMetaToJson(data as OperationMeta);
 			case UserEntity:
 				return userEntityToJson(data as UserEntity);
+			case KeyPerUserEntity:
+				return keyPerUserEntityToJson(data as KeyPerUserEntity);
+			case KeyPerUserData:
+				return keyPerUserDataToJson(data as KeyPerUserData);
+			case KeyPerUserDataUser:
+				return keyPerUserDataUserToJson(data as KeyPerUserDataUser);
+			case KeyPerUserDataPortal:
+				return keyPerUserDataPortalToJson(data as KeyPerUserDataPortal);
+			case RouteEntity:
+				return routeEntityToJson(data as RouteEntity);
+			case RouteRoutes:
+				return routeRoutesToJson(data as RouteRoutes);
+			case RouteRoutesRoute:
+				return routeRoutesRouteToJson(data as RouteRoutesRoute);
+			case RouteRoutesRouteUser:
+				return routeRoutesRouteUserToJson(data as RouteRoutesRouteUser);
+			case RouteRoutesRouteStops:
+				return routeRoutesRouteStopsToJson(data as RouteRoutesRouteStops);
+			case RouteRoutesRouteStopsRoute:
+				return routeRoutesRouteStopsRouteToJson(data as RouteRoutesRouteStopsRoute);
+			case RouteRoutesRouteStopsRouteUser:
+				return routeRoutesRouteStopsRouteUserToJson(data as RouteRoutesRouteStopsRouteUser);
+			case RouteRoutesRouteStopsUser:
+				return routeRoutesRouteStopsUserToJson(data as RouteRoutesRouteStopsUser);
+			case RouteRoutesRouteKeys:
+				return routeRoutesRouteKeysToJson(data as RouteRoutesRouteKeys);
+			case RouteRoutesRouteKeysRoute:
+				return routeRoutesRouteKeysRouteToJson(data as RouteRoutesRouteKeysRoute);
+			case RouteRoutesRouteKeysRouteUser:
+				return routeRoutesRouteKeysRouteUserToJson(data as RouteRoutesRouteKeysRouteUser);
+			case RouteRoutesRouteKeysPortal:
+				return routeRoutesRouteKeysPortalToJson(data as RouteRoutesRouteKeysPortal);
 			case UserDTOEntity:
 				return userDTOEntityToJson(data as UserDTOEntity);
 			case KeyEntity:
@@ -90,6 +158,38 @@ class JsonConvert<T> {
 			return OperationMeta().fromJson(json);
 		}	else if(type == (UserEntity).toString()){
 			return UserEntity().fromJson(json);
+		}	else if(type == (KeyPerUserEntity).toString()){
+			return KeyPerUserEntity().fromJson(json);
+		}	else if(type == (KeyPerUserData).toString()){
+			return KeyPerUserData().fromJson(json);
+		}	else if(type == (KeyPerUserDataUser).toString()){
+			return KeyPerUserDataUser().fromJson(json);
+		}	else if(type == (KeyPerUserDataPortal).toString()){
+			return KeyPerUserDataPortal().fromJson(json);
+		}	else if(type == (RouteEntity).toString()){
+			return RouteEntity().fromJson(json);
+		}	else if(type == (RouteRoutes).toString()){
+			return RouteRoutes().fromJson(json);
+		}	else if(type == (RouteRoutesRoute).toString()){
+			return RouteRoutesRoute().fromJson(json);
+		}	else if(type == (RouteRoutesRouteUser).toString()){
+			return RouteRoutesRouteUser().fromJson(json);
+		}	else if(type == (RouteRoutesRouteStops).toString()){
+			return RouteRoutesRouteStops().fromJson(json);
+		}	else if(type == (RouteRoutesRouteStopsRoute).toString()){
+			return RouteRoutesRouteStopsRoute().fromJson(json);
+		}	else if(type == (RouteRoutesRouteStopsRouteUser).toString()){
+			return RouteRoutesRouteStopsRouteUser().fromJson(json);
+		}	else if(type == (RouteRoutesRouteStopsUser).toString()){
+			return RouteRoutesRouteStopsUser().fromJson(json);
+		}	else if(type == (RouteRoutesRouteKeys).toString()){
+			return RouteRoutesRouteKeys().fromJson(json);
+		}	else if(type == (RouteRoutesRouteKeysRoute).toString()){
+			return RouteRoutesRouteKeysRoute().fromJson(json);
+		}	else if(type == (RouteRoutesRouteKeysRouteUser).toString()){
+			return RouteRoutesRouteKeysRouteUser().fromJson(json);
+		}	else if(type == (RouteRoutesRouteKeysPortal).toString()){
+			return RouteRoutesRouteKeysPortal().fromJson(json);
 		}	else if(type == (UserDTOEntity).toString()){
 			return UserDTOEntity().fromJson(json);
 		}	else if(type == (KeyEntity).toString()){
@@ -118,6 +218,38 @@ class JsonConvert<T> {
 			return data.map<OperationMeta>((e) => OperationMeta().fromJson(e)).toList() as M;
 		}	else if(<UserEntity>[] is M){
 			return data.map<UserEntity>((e) => UserEntity().fromJson(e)).toList() as M;
+		}	else if(<KeyPerUserEntity>[] is M){
+			return data.map<KeyPerUserEntity>((e) => KeyPerUserEntity().fromJson(e)).toList() as M;
+		}	else if(<KeyPerUserData>[] is M){
+			return data.map<KeyPerUserData>((e) => KeyPerUserData().fromJson(e)).toList() as M;
+		}	else if(<KeyPerUserDataUser>[] is M){
+			return data.map<KeyPerUserDataUser>((e) => KeyPerUserDataUser().fromJson(e)).toList() as M;
+		}	else if(<KeyPerUserDataPortal>[] is M){
+			return data.map<KeyPerUserDataPortal>((e) => KeyPerUserDataPortal().fromJson(e)).toList() as M;
+		}	else if(<RouteEntity>[] is M){
+			return data.map<RouteEntity>((e) => RouteEntity().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutes>[] is M){
+			return data.map<RouteRoutes>((e) => RouteRoutes().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRoute>[] is M){
+			return data.map<RouteRoutesRoute>((e) => RouteRoutesRoute().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRouteUser>[] is M){
+			return data.map<RouteRoutesRouteUser>((e) => RouteRoutesRouteUser().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRouteStops>[] is M){
+			return data.map<RouteRoutesRouteStops>((e) => RouteRoutesRouteStops().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRouteStopsRoute>[] is M){
+			return data.map<RouteRoutesRouteStopsRoute>((e) => RouteRoutesRouteStopsRoute().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRouteStopsRouteUser>[] is M){
+			return data.map<RouteRoutesRouteStopsRouteUser>((e) => RouteRoutesRouteStopsRouteUser().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRouteStopsUser>[] is M){
+			return data.map<RouteRoutesRouteStopsUser>((e) => RouteRoutesRouteStopsUser().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRouteKeys>[] is M){
+			return data.map<RouteRoutesRouteKeys>((e) => RouteRoutesRouteKeys().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRouteKeysRoute>[] is M){
+			return data.map<RouteRoutesRouteKeysRoute>((e) => RouteRoutesRouteKeysRoute().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRouteKeysRouteUser>[] is M){
+			return data.map<RouteRoutesRouteKeysRouteUser>((e) => RouteRoutesRouteKeysRouteUser().fromJson(e)).toList() as M;
+		}	else if(<RouteRoutesRouteKeysPortal>[] is M){
+			return data.map<RouteRoutesRouteKeysPortal>((e) => RouteRoutesRouteKeysPortal().fromJson(e)).toList() as M;
 		}	else if(<UserDTOEntity>[] is M){
 			return data.map<UserDTOEntity>((e) => UserDTOEntity().fromJson(e)).toList() as M;
 		}	else if(<KeyEntity>[] is M){

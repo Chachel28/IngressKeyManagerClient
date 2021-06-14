@@ -60,37 +60,41 @@ class _OperationPageState extends State<OperationPage> {
               "Tienes que estar logeado en Reswue para ver la lista de operaciones",
             );
           }
-          return FutureBuilder<OperationEntity>(
-            future: operations,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(8),
-                    itemCount: snapshot.data.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        title: Center(
-                          child: Text('${snapshot.data.data[index].slug}'),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => KeysPage(utils, snapshot.data.data[index].slug),
-                            ),
-                          );
-                        },
-                      );
-                    });
-                ;
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              // By default, show a loading spinner.
-              return CircularProgressIndicator();
-            },
+          return Expanded(
+            child: FutureBuilder<OperationEntity>(
+              future: operations,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(8),
+                      itemCount: snapshot.data.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          title: Center(
+                            child: Text('${snapshot.data.data[index].slug}'),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => KeysPage(utils, snapshot.data.data[index].slug),
+                              ),
+                            );
+                          },
+                        );
+                      });
+                  ;
+                } else if (snapshot.hasError) {
+                  return Center(child: Text("${snapshot.error}"));
+                }
+                // By default, show a loading spinner.
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
           );
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");

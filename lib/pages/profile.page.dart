@@ -31,6 +31,14 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.popUntil(context, ModalRoute.withName('/'));
+            },
+            icon: Icon(Icons.power_settings_new_sharp),
+          ),
+        ],
         title: Text(utils.getStringSharedPref(Constants.usernameKey)),
         centerTitle: true,
       ),
@@ -89,13 +97,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ),
                                     ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: logged
-                                              ? Colors.red
-                                              : Colors.blue),
-                                      onPressed: () => {
-                                        logged ? logOutReswue() : logInReswue()
-                                      },
+                                      style: ElevatedButton.styleFrom(primary: logged ? Colors.red : Colors.blue),
+                                      onPressed: () => {logged ? logOutReswue() : logInReswue()},
                                       child: Text(
                                         '$reswueText',
                                       ),
@@ -103,19 +106,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ],
                                 ),
                               ),
-                              Container(
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: ListTile(
-                                        leading: Icon(Icons.person),
-                                        title: Text("Telegram"),
-                                      ),
-                                    ),
-                                    buildTelegramButton(),
-                                  ],
-                                ),
-                              ),
+                              // Container(
+                              //   child: Row(
+                              //     children: [
+                              //       Flexible(
+                              //         child: ListTile(
+                              //           leading: Icon(Icons.person),
+                              //           title: Text("Telegram"),
+                              //         ),
+                              //       ),
+                              //       buildTelegramButton(),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         ],
@@ -149,8 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   buildProfileImage() {
-    if (utils.getStringSharedPref(Constants.userImageKey) != null &&
-        utils.getStringSharedPref(Constants.userImageKey).isNotEmpty) {
+    if (utils.getStringSharedPref(Constants.userImageKey) != null && utils.getStringSharedPref(Constants.userImageKey).isNotEmpty) {
       return NetworkImage(utils.getStringSharedPref(Constants.userImageKey));
     }
     return AssetImage("images/key.jpg");
@@ -174,8 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   logInReswue() {
-    if (utils.getStringSharedPref(Constants.codeKey).isEmpty ||
-        utils.getStringSharedPref(Constants.codeKey) == null) {
+    if (utils.getStringSharedPref(Constants.codeKey).isEmpty || utils.getStringSharedPref(Constants.codeKey) == null) {
       Navigator.push(
         context,
         MaterialPageRoute(

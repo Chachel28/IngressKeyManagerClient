@@ -30,68 +30,65 @@ class _ScaffoldPageState extends State<ScaffoldPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        children: [
-          Container(
-            child: HomePage(utils),
-            color: Colors.white,
-            //homepage
-          ),
-          Container(
-            child: RoutesPage(utils),
-            color: Colors.white,
-            //routes
-          ),
-          Container(
-            child: OperationPage(utils),
-            color: Colors.white,
-            //operations
-          ),
-          Container(
-            child: DashboardPage(utils),
-            color: Colors.white,
-            //dashboard
-          ),
-          Container(
-            child: ProfilePage(utils),
-            color: Colors.white,
-          ),
-        ],
-        controller: pageController,
-        physics: NeverScrollableScrollPhysics(),
-        onPageChanged: onPageChanged,
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: Colors.white,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home,
-                  color: (_page == 0) ? Colors.black : Colors.grey),
-              title: Container(height: 0.0),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.alt_route,
-                  color: (_page == 1) ? Colors.black : Colors.grey),
-              title: Container(height: 0.0),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.vpn_key_sharp,
-                  color: (_page == 2) ? Colors.black : Colors.grey),
-              title: Container(height: 0.0),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard,
-                  color: (_page == 3) ? Colors.black : Colors.grey),
-              title: Container(height: 0.0),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person,
-                  color: (_page == 4) ? Colors.black : Colors.grey),
-              backgroundColor: Colors.white),
-        ],
-        onTap: navigationTapped,
-        currentIndex: _page,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: PageView(
+          children: [
+            Container(
+              child: HomePage(utils),
+              color: Colors.white,
+              //homepage
+            ),
+            // Container(
+            //   child: RoutesPage(utils),
+            //   color: Colors.white,
+            //   //routes
+            // ),
+            Container(
+              child: OperationPage(utils),
+              color: Colors.white,
+              //operations
+            ),
+            // Container(
+            //   child: DashboardPage(utils),
+            //   color: Colors.white,
+            //   //dashboard
+            // ),
+            Container(
+              child: ProfilePage(utils),
+              color: Colors.white,
+            ),
+          ],
+          controller: pageController,
+          physics: NeverScrollableScrollPhysics(),
+          onPageChanged: onPageChanged,
+        ),
+        bottomNavigationBar: CupertinoTabBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: (_page == 0) ? Colors.white : Colors.grey),
+            ),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.alt_route,
+            //         color: (_page == 1) ? Colors.black : Colors.grey),
+            //     title: Container(height: 0.0),
+            //     backgroundColor: Colors.white),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.vpn_key_sharp, color: (_page == 1) ? Colors.white : Colors.grey),
+            ),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.dashboard,
+            //         color: (_page == 3) ? Colors.black : Colors.grey),
+            //     title: Container(height: 0.0),
+            //     backgroundColor: Colors.white),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: (_page == 2) ? Colors.white : Colors.grey),
+            ),
+          ],
+          onTap: navigationTapped,
+          currentIndex: _page,
+        ),
       ),
     );
   }

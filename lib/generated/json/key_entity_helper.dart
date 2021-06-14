@@ -22,65 +22,51 @@ Map<String, dynamic> keyEntityToJson(KeyEntity entity) {
 }
 
 keyDataFromJson(KeyData data, Map<String, dynamic> json) {
-	if (json['codename'] != null) {
-		data.codename = json['codename'].toString();
+	if (json['portal_id'] != null) {
+		data.portalId = json['portal_id'] is String
+				? int.tryParse(json['portal_id'])
+				: json['portal_id'].toInt();
 	}
-	if (json['created_at'] != null) {
-		data.createdAt = json['created_at'].toString();
+	if (json['portal_name'] != null) {
+		data.portalName = json['portal_name'].toString();
 	}
-	if (json['description'] != null) {
-		data.description = json['description'].toString();
+	if (json['latitude'] != null) {
+		data.latitude = json['latitude'] is String
+				? double.tryParse(json['latitude'])
+				: json['latitude'].toDouble();
+	}
+	if (json['longitude'] != null) {
+		data.longitude = json['longitude'] is String
+				? double.tryParse(json['longitude'])
+				: json['longitude'].toDouble();
+	}
+	if (json['city'] != null) {
+		data.city = json['city'].toString();
+	}
+	if (json['province'] != null) {
+		data.province = json['province'].toString();
 	}
 	if (json['guid'] != null) {
 		data.guid = json['guid'].toString();
 	}
-	if (json['id'] != null) {
-		data.id = json['id'] is String
-				? int.tryParse(json['id'])
-				: json['id'].toInt();
-	}
-	if (json['keys_farmed'] != null) {
-		data.keysFarmed = json['keys_farmed'] is String
-				? int.tryParse(json['keys_farmed'])
-				: json['keys_farmed'].toInt();
-	}
-	if (json['lat'] != null) {
-		data.lat = json['lat'] is String
-				? double.tryParse(json['lat'])
-				: json['lat'].toDouble();
-	}
-	if (json['layers'] != null) {
-		data.layers = (json['layers'] as List).map((v) => v is String
-				? int.tryParse(v)
-				: v.toInt()).toList().cast<int>();
-	}
-	if (json['lng'] != null) {
-		data.lng = json['lng'] is String
-				? double.tryParse(json['lng'])
-				: json['lng'].toDouble();
-	}
-	if (json['name'] != null) {
-		data.name = json['name'].toString();
-	}
-	if (json['updated_at'] != null) {
-		data.updatedAt = json['updated_at'].toString();
+	if (json['keys'] != null) {
+		data.keys = json['keys'] is String
+				? int.tryParse(json['keys'])
+				: json['keys'].toInt();
 	}
 	return data;
 }
 
 Map<String, dynamic> keyDataToJson(KeyData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	data['codename'] = entity.codename;
-	data['created_at'] = entity.createdAt;
-	data['description'] = entity.description;
+	data['portal_id'] = entity.portalId;
+	data['portal_name'] = entity.portalName;
+	data['latitude'] = entity.latitude;
+	data['longitude'] = entity.longitude;
+	data['city'] = entity.city;
+	data['province'] = entity.province;
 	data['guid'] = entity.guid;
-	data['id'] = entity.id;
-	data['keys_farmed'] = entity.keysFarmed;
-	data['lat'] = entity.lat;
-	data['layers'] = entity.layers;
-	data['lng'] = entity.lng;
-	data['name'] = entity.name;
-	data['updated_at'] = entity.updatedAt;
+	data['keys'] = entity.keys;
 	return data;
 }
 
@@ -92,7 +78,7 @@ keyLinksFromJson(KeyLinks data, Map<String, dynamic> json) {
 		data.last = json['last'].toString();
 	}
 	if (json['next'] != null) {
-		data.next = json['next'];
+		data.next = json['next'].toString();
 	}
 	if (json['prev'] != null) {
 		data.prev = json['prev'];

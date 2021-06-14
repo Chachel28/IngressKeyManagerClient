@@ -8,26 +8,22 @@ class KeyEntity with JsonConvert<KeyEntity> {
 }
 
 class KeyData with JsonConvert<KeyData> {
-	String codename;
-	@JSONField(name: "created_at")
-	String createdAt;
-	String description;
+	@JSONField(name: "portal_id")
+	int portalId;
+	@JSONField(name: "portal_name")
+	String portalName;
+	double latitude;
+	double longitude;
+	String city;
+	String province;
 	String guid;
-	int id;
-	@JSONField(name: "keys_farmed")
-	int keysFarmed;
-	double lat;
-	List<int> layers;
-	double lng;
-	String name;
-	@JSONField(name: "updated_at")
-	String updatedAt;
+	int keys;
 }
 
 class KeyLinks with JsonConvert<KeyLinks> {
 	String first;
 	String last;
-	dynamic next;
+	String next;
 	dynamic prev;
 }
 

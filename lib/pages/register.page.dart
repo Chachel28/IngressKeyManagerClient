@@ -4,7 +4,8 @@ import 'package:ingress_key_manager/util/utils.dart';
 
 class NewUser extends StatefulWidget {
   Utils utils;
-  NewUser(Utils utils){
+
+  NewUser(Utils utils) {
     this.utils = utils;
   }
 
@@ -17,8 +18,9 @@ class _NewUserState extends State<NewUser> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  final repeatPassController = TextEditingController();
 
-  _NewUserState(Utils utils){
+  _NewUserState(Utils utils) {
     this.utils = utils;
   }
 
@@ -27,10 +29,7 @@ class _NewUserState extends State<NewUser> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.blueGrey, Colors.lightBlueAccent]),
+          gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [Colors.blueGrey, Colors.lightBlueAccent]),
         ),
         child: ListView(
           children: <Widget>[
@@ -38,20 +37,6 @@ class _NewUserState extends State<NewUser> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 60, left: 10),
-                      child: RotatedBox(
-                        quarterTurns: -1,
-                        child: Text(
-                          'Sing up',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 38,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 30.0, left: 10.0),
                       child: Container(
@@ -65,10 +50,11 @@ class _NewUserState extends State<NewUser> {
                             ),
                             Center(
                               child: Text(
-                                'We can start something new',
+                                'Registro',
                                 style: TextStyle(
-                                  fontSize: 24,
                                   color: Colors.white,
+                                  fontSize: 38,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
                             ),
@@ -91,7 +77,7 @@ class _NewUserState extends State<NewUser> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: Colors.lightBlueAccent,
-                        labelText: 'Name',
+                        labelText: 'Usuario',
                         labelStyle: TextStyle(
                           color: Colors.white70,
                         ),
@@ -133,7 +119,28 @@ class _NewUserState extends State<NewUser> {
                       obscureText: true,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        labelText: 'Password',
+                        labelText: 'Contraseña',
+                        labelStyle: TextStyle(
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 50, right: 50),
+                  child: Container(
+                    height: 60,
+                    width: MediaQuery.of(context).size.width,
+                    child: TextField(
+                      controller: repeatPassController,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: 'Repetir contraseña',
                         labelStyle: TextStyle(
                           color: Colors.white70,
                         ),
@@ -147,35 +154,43 @@ class _NewUserState extends State<NewUser> {
                     alignment: Alignment.bottomRight,
                     height: 50,
                     width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.blue[300],
-                            blurRadius: 10.0,
-                            // has the effect of softening the shadowUserOld()
-                            spreadRadius: 1.0,
-                            // has the effect of extending the shadow
-                            offset: Offset(
-                              5.0, // horizontal, move right 10
-                              5.0, // vertical, move down 10
-                            ),
-                          ),
-                        ],
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30)),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Colors.blue[300],
+                        blurRadius: 10.0,
+                        // has the effect of softening the shadowUserOld()
+                        spreadRadius: 1.0,
+                        // has the effect of extending the shadow
+                        offset: Offset(
+                          5.0, // horizontal, move right 10
+                          5.0, // vertical, move down 10
+                        ),
+                      ),
+                    ], color: Colors.white, borderRadius: BorderRadius.circular(30)),
                     child: FlatButton(
-                      onPressed: () async{
-                        UserEntity user = UserEntity();
-                        user = await utils.createUser(nameController.text, emailController.text, passController.text);
-                        if(user.username != null){
-                          Navigator.pop(context);
+                      onPressed: () async {
+                        if (repeatPassController.text != passController.text) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text('Las contraseñas introducida no coinciden entre si'),
+                              );
+                            },
+                          );
+                        } else {
+                          UserEntity user = UserEntity();
+                          user = await utils.createUser(nameController.text, emailController.text, passController.text);
+                          if (user.username != null) {
+                            Navigator.pop(context);
+                          }
                         }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            'Registrar',
+                            'Registrarse',
                             style: TextStyle(
                               color: Colors.lightBlueAccent,
                               fontSize: 14,
@@ -192,7 +207,7 @@ class _NewUserState extends State<NewUser> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 30),
+                  padding: const EdgeInsets.only(top: 50, left: 50),
                   child: Container(
                     alignment: Alignment.topRight,
                     //color: Colors.red,
@@ -200,9 +215,9 @@ class _NewUserState extends State<NewUser> {
                     child: Row(
                       children: <Widget>[
                         Text(
-                          'Have we met before?',
+                          'Ya tienes cuenta?',
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 15,
                             color: Colors.white70,
                           ),
                         ),
@@ -212,9 +227,9 @@ class _NewUserState extends State<NewUser> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            'Sing in',
+                            'Entra aquí',
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 15,
                               color: Colors.white,
                             ),
                             textAlign: TextAlign.right,

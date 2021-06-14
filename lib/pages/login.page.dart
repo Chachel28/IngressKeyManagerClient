@@ -6,7 +6,8 @@ import 'package:ingress_key_manager/util/constants.dart' as Constants;
 
 class LoginPage extends StatefulWidget {
   Utils utils;
-  LoginPage(Utils utils){
+
+  LoginPage(Utils utils) {
     this.utils = utils;
   }
 
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final passController = TextEditingController();
   Utils utils;
 
-  _LoginPageState(Utils utils){
+  _LoginPageState(Utils utils) {
     this.utils = utils;
   }
 
@@ -29,10 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.blueGrey, Colors.lightBlueAccent]),
+          gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [Colors.blueGrey, Colors.lightBlueAccent]),
         ),
         child: ListView(
           children: <Widget>[
@@ -41,21 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(top: 60, left: 10),
-                      child: RotatedBox(
-                        quarterTurns: -1,
-                        child: Text(
-                          '${inputText}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 38,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0, left: 10.0),
+                      padding: const EdgeInsets.only(top: 30.0, left: 5),
                       child: Container(
                         //color: Colors.green,
                         height: 200,
@@ -67,10 +51,11 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             Center(
                               child: Text(
-                                'A world of possibility in an app',
+                                'The Key',
                                 style: TextStyle(
-                                  fontSize: 24,
                                   color: Colors.white,
+                                  fontSize: 38,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
                             ),
@@ -93,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: Colors.lightBlueAccent,
-                        labelText: 'Name',
+                        labelText: 'Usuario',
                         labelStyle: TextStyle(
                           color: Colors.white70,
                         ),
@@ -114,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: true,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        labelText: 'Password',
+                        labelText: 'Contraseña',
                         labelStyle: TextStyle(
                           color: Colors.white70,
                         ),
@@ -144,20 +129,29 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: FlatButton(
-                      onPressed: () async{
+                      onPressed: () async {
                         String token = await utils.loginUser(nameController.text, passController.text);
-                        utils.setStringSharedPref(Constants.apiTokenKey, token);
-                        if(token.isNotEmpty){
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => ScaffoldPage(utils),
-                          ));
+                        if (token == "fail") {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text("Datos introducidos incorrectos"),
+                              );
+                            },
+                          );
+                        } else {
+                          utils.setStringSharedPref(Constants.apiTokenKey, token);
+                          if (token.isNotEmpty) {
+                            Navigator.pushNamed(context, "/homePage");
+                          }
                         }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            'Login',
+                            'Entrar',
                             style: TextStyle(
                               color: Colors.lightBlueAccent,
                               fontSize: 14,
@@ -174,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 30),
+                  padding: const EdgeInsets.only(top: 30, left: 50),
                   child: Container(
                     alignment: Alignment.topRight,
                     //color: Colors.red,
@@ -182,29 +176,32 @@ class _LoginPageState extends State<LoginPage> {
                     child: Row(
                       children: <Widget>[
                         Text(
-                          'Your first time?',
+                          'Eres nuevo?',
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 15,
                             color: Colors.white70,
                           ),
                         ),
-                        FlatButton(
-                          padding: EdgeInsets.all(0),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NewUser(utils),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: FlatButton(
+                            padding: EdgeInsets.all(0),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NewUser(utils),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Registrate aqui',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
                               ),
-                            );
-                          },
-                          child: Text(
-                            'Sing up',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
+                              textAlign: TextAlign.right,
                             ),
-                            textAlign: TextAlign.right,
                           ),
                         ),
                       ],
