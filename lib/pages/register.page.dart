@@ -75,7 +75,7 @@ class _NewUserState extends State<NewUser> {
                         color: Colors.white,
                       ),
                       decoration: InputDecoration(
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(),
                         fillColor: Colors.lightBlueAccent,
                         labelText: 'Usuario',
                         labelStyle: TextStyle(
@@ -96,7 +96,7 @@ class _NewUserState extends State<NewUser> {
                         color: Colors.white,
                       ),
                       decoration: InputDecoration(
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(),
                         fillColor: Colors.lightBlueAccent,
                         labelText: 'E-mail',
                         labelStyle: TextStyle(
@@ -118,7 +118,7 @@ class _NewUserState extends State<NewUser> {
                       ),
                       obscureText: true,
                       decoration: InputDecoration(
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(),
                         labelText: 'Contraseña',
                         labelStyle: TextStyle(
                           color: Colors.white70,
@@ -139,7 +139,7 @@ class _NewUserState extends State<NewUser> {
                       ),
                       obscureText: true,
                       decoration: InputDecoration(
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(),
                         labelText: 'Repetir contraseña',
                         labelStyle: TextStyle(
                           color: Colors.white70,
@@ -169,20 +169,59 @@ class _NewUserState extends State<NewUser> {
                     ], color: Colors.white, borderRadius: BorderRadius.circular(30)),
                     child: FlatButton(
                       onPressed: () async {
-                        if (repeatPassController.text != passController.text) {
+                        RegExp regex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                        //email validation
+                        if(passController.text.length < 8 || passController.text.length > 16){
                           showDialog(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                content: Text('Las contraseñas introducida no coinciden entre si'),
+                                content: Text('La contraseña debe tener entre 8 y 16 caracteres'),
+                              );
+                            },
+                          );
+                        }else if (!regex.hasMatch(emailController.text)) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text('El email introducido no tiene un formato válido'),
+                              );
+                            },
+                          );
+                        } else if (repeatPassController.text != passController.text) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text('Las contraseñas introducidas no coinciden entre si'),
                               );
                             },
                           );
                         } else {
-                          UserEntity user = UserEntity();
+                          //login
+                          int user;
                           user = await utils.createUser(nameController.text, emailController.text, passController.text);
-                          if (user.username != null) {
+                          if (user == 200) {
                             Navigator.pop(context);
+                          } else if (user == 407) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Text('EL usuario no se ha podido crear correctamente, el email introducido ya está registrado'),
+                                );
+                              },
+                            );
+                          } else if (user == 406) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Text('EL usuario no se ha podido crear correctamente, el nombre de usuario ya está registrado'),
+                                );
+                              },
+                            );
                           }
                         }
                       },

@@ -21,10 +21,16 @@ class Utils {
   SharedPreferences prefs;
 
   Utils() {
-    SharedPreferences.getInstance().then((pref) => prefs = pref);
+    SharedPreferences.getInstance().then((pref){
+      prefs = pref;
+      prefs.setString(Constants.codeKey, "");
+      prefs.setString(Constants.reswueTokenKey, "");
+      prefs.setString(Constants.usernameKey, "");
+      prefs.setString(Constants.userImageKey, "");
+    });
   }
 
-  Future<UserEntity> createUser(String username, String email, String password) async {
+  Future<int> createUser(String username, String email, String password) async {
     final response = await http.post(
       Uri.http(Constants.baseUrl, Constants.endpointUsers),
       headers: <String, String>{
@@ -32,14 +38,7 @@ class Utils {
       },
       body: jsonEncode(<String, String>{'username': username, 'email': email, 'password': password}),
     );
-
-    if (response.statusCode == 200) {
-      var user = UserEntity();
-      userEntityFromJson(user, jsonDecode(response.body));
-      return user;
-    } else {
-      throw Exception('Failed to create user.');
-    }
+    return response.statusCode;
   }
 
   Future<String> loginUser(String username, String password) async {
@@ -152,7 +151,7 @@ class Utils {
       operationEntity = operationEntityFromJson(operationEntity, jsonDecode(Utf8Decoder().convert(response.bodyBytes)));
       return operationEntity;
     } else {
-      throw Exception('Failed to load operation list');
+      throw Exception('Reswue not authenticated');
     }
   }
 

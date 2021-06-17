@@ -1,7 +1,7 @@
 //API's URLs
 //String baseUrl = "10.0.2.2:8080";
-String baseUrl = "192.168.1.21:8080";
-//String baseUrl = "192.168.43.218:8080";
+// String baseUrl = "192.168.1.21:8080";
+String baseUrl = "192.168.43.218:8080";
 
 String endpointUsers = "api/v1/user";
 String endpointLogin = "api/v1/login";

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ingress_key_manager/pages/scaffold.page.dart';
 import 'package:ingress_key_manager/pages/register.page.dart';
 import 'package:ingress_key_manager/util/utils.dart';
 import 'package:ingress_key_manager/util/constants.dart' as Constants;
@@ -76,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.white,
                       ),
                       decoration: InputDecoration(
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(),
                         fillColor: Colors.lightBlueAccent,
                         labelText: 'Usuario',
                         labelStyle: TextStyle(
@@ -98,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       obscureText: true,
                       decoration: InputDecoration(
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(),
                         labelText: 'Contraseña',
                         labelStyle: TextStyle(
                           color: Colors.white70,
